@@ -5,43 +5,55 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Chicken World: a chicken recipe from every country</title>
 <meta name="description" content="A cookbook project: one chicken recipe from every country in the world.">
+<meta property="og:title" content="Chicken World">
+<meta property="og:description" content="A cookbook in the making: one chicken recipe from every country on Earth.">
+<meta property="og:image" content="https://chickenworldrecipes.com/assets/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700;800&family=Source+Serif+4:wght@400;600&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#fffaf0;--ink:#2b2118;--muted:#7a6a5a;--accent:#c8501e;--card:#fff;--line:#eadfce}
+:root{--bg:#fff;--ink:#0b0b0b;--muted:#6b6b6b;--accent:#0b0b0b;--card:#fff;--line:#e4e4e4;--head:"Montserrat",system-ui,sans-serif;--body:"Source Serif 4",Georgia,serif}
 *{box-sizing:border-box}
-body{margin:0;font-family:Georgia,"Times New Roman",serif;background:var(--bg);color:var(--ink);line-height:1.55}
-a{color:var(--accent)}
-header.hero{padding:64px 20px 48px;text-align:center;background:linear-gradient(180deg,#ffe9c7,var(--bg))}
-h1{font-size:clamp(2.2rem,7vw,3.8rem);margin:0 0 8px;letter-spacing:-.02em}
-.sub{font-size:1.2rem;color:var(--muted);max-width:34rem;margin:0 auto}
-nav{display:flex;gap:18px;justify-content:center;flex-wrap:wrap;margin-top:24px;font-family:system-ui,sans-serif;font-size:.95rem}
-nav a{text-decoration:none;font-weight:600}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:var(--body);background:var(--bg);color:var(--ink);line-height:1.6;font-size:1.05rem}
+a{color:var(--ink)}
+header.hero{background:#000;color:#fff;text-align:center;padding:40px 20px 28px}
+.hero img.logo{width:min(300px,70vw);height:auto;display:block;margin:0 auto}
+.sub{font-size:1.2rem;color:#cfcfcf;max-width:34rem;margin:4px auto 0}
+nav{display:flex;gap:6px 26px;justify-content:center;flex-wrap:wrap;margin-top:22px;font-family:var(--head);font-size:.8rem;letter-spacing:.18em;text-transform:uppercase}
+nav a{color:#fff;text-decoration:none;font-weight:700;padding:6px 0;border-bottom:2px solid transparent}
+nav a:hover{border-color:#fff}
 main{max-width:1100px;margin:0 auto;padding:0 20px 64px}
-section{padding-top:48px}
-h2{font-size:1.7rem;margin:0 0 12px}
-.progress{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px}
-.bar{height:14px;background:var(--line);border-radius:99px;overflow:hidden;margin:12px 0 6px}
-.bar>i{display:block;height:100%;background:var(--accent);width:0}
-.stats{display:flex;gap:28px;flex-wrap:wrap;font-family:system-ui,sans-serif}
-.stats b{display:block;font-size:1.8rem;font-family:Georgia,serif}
-.controls{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0;font-family:system-ui,sans-serif}
-input,select{padding:10px 12px;border:1px solid var(--line);border-radius:10px;font-size:1rem;background:#fff}
+section{padding-top:56px}
+h2{font-family:var(--head);font-size:1.05rem;letter-spacing:.2em;text-transform:uppercase;font-weight:800;margin:0 0 16px;padding-bottom:10px;border-bottom:3px solid var(--ink)}
+.progress{border:2px solid var(--ink);border-radius:4px;padding:22px}
+.bar{height:12px;background:var(--line);overflow:hidden;margin:14px 0 8px}
+.bar>i{display:block;height:100%;background:var(--ink);width:0}
+.stats{display:flex;gap:34px;flex-wrap:wrap;font-family:var(--head);font-size:.8rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.stats b{display:block;font-size:2.2rem;letter-spacing:0;color:var(--ink);font-weight:800}
+.controls{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0;font-family:var(--head)}
+input,select{padding:11px 12px;border:2px solid var(--ink);border-radius:4px;font-size:.95rem;background:#fff;font-family:var(--head)}
 input{flex:1;min-width:200px}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
-.tile{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;position:relative}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:4px;overflow:hidden;position:relative}
 .tile img{width:100%;aspect-ratio:1;object-fit:cover;display:block}
-.tile .badge{position:absolute;top:6px;right:6px;width:30px;height:30px;border-radius:50%;border:2px solid #fff;box-shadow:0 1px 4px #0004}
-.tile div{padding:8px 10px;font-family:system-ui,sans-serif}
-.tile strong{display:block;font-size:.9rem}
-.tile span{font-size:.8rem;color:var(--muted)}
-.tile.cooked{border-color:var(--accent)}
-.count{font-family:system-ui,sans-serif;color:var(--muted);font-size:.9rem}
-.btn{display:inline-block;background:var(--accent);color:#fff;padding:12px 20px;border-radius:10px;text-decoration:none;font-family:system-ui,sans-serif;font-weight:600}
-footer{text-align:center;color:var(--muted);padding:32px 20px;font-family:system-ui,sans-serif;font-size:.9rem}
+.tile .badge{position:absolute;top:6px;right:6px;width:30px;height:30px;border-radius:50%;border:2px solid #fff;box-shadow:0 1px 4px #0006}
+.tile div{padding:9px 10px;font-family:var(--head)}
+.tile strong{display:block;font-size:.78rem;line-height:1.3}
+.tile span{font-size:.72rem;color:var(--muted)}
+.tile.cooked{border:2px solid var(--ink)}
+.count{font-family:var(--head);color:var(--muted);font-size:.8rem}
+.btn{display:inline-block;background:var(--ink);color:#fff;padding:13px 22px;border-radius:4px;text-decoration:none;font-family:var(--head);font-weight:700;font-size:.8rem;letter-spacing:.14em;text-transform:uppercase}
+.btn:hover{background:#333}
+footer{background:#000;color:#bdbdbd;text-align:center;padding:36px 20px;font-family:var(--head);font-size:.75rem;letter-spacing:.12em;text-transform:uppercase}
+footer img{width:90px;display:block;margin:0 auto 10px}
 </style>
 </head>
 <body>
 <header class="hero">
-  <h1>🐔 Chicken World</h1>
+  <h1 style="margin:0"><img class="logo" src="assets/logo-dark.png" alt="Chicken World"></h1>
   <p class="sub">A cookbook in the making: one chicken recipe from every country on Earth.</p>
   <nav><a href="#progress">Progress</a><a href="#recipes">Dishes</a><a href="#tierlist">Tier list</a><a href="#about">About</a></nav>
 </header>
@@ -79,7 +91,7 @@ footer{text-align:center;color:var(--muted);padding:32px 20px;font-family:system
   <p>Follow along on Instagram: <a href="https://www.instagram.com/chickenworldus/">@chickenworldus</a></p>
 </section>
 </main>
-<footer>© Chicken World · chickenworldrecipes.com</footer>
+<footer><img src="assets/logo-dark.png" alt="">© Chicken World · chickenworldrecipes.com</footer>
 <script>
 fetch('dishes.json').then(r=>r.json()).then(d=>{
   const grid=document.getElementById('grid'),q=document.getElementById('q'),reg=document.getElementById('region'),st=document.getElementById('status'),n=document.getElementById('n');
