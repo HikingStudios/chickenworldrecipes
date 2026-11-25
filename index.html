@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Chicken World: a chicken recipe from every country</title>
+<meta name="description" content="A cookbook project: one chicken recipe from every country in the world.">
+<style>
+:root{--bg:#fffaf0;--ink:#2b2118;--muted:#7a6a5a;--accent:#c8501e;--card:#fff;--line:#eadfce}
+*{box-sizing:border-box}
+body{margin:0;font-family:Georgia,"Times New Roman",serif;background:var(--bg);color:var(--ink);line-height:1.55}
+a{color:var(--accent)}
+header.hero{padding:64px 20px 48px;text-align:center;background:linear-gradient(180deg,#ffe9c7,var(--bg))}
+h1{font-size:clamp(2.2rem,7vw,3.8rem);margin:0 0 8px;letter-spacing:-.02em}
+.sub{font-size:1.2rem;color:var(--muted);max-width:34rem;margin:0 auto}
+nav{display:flex;gap:18px;justify-content:center;flex-wrap:wrap;margin-top:24px;font-family:system-ui,sans-serif;font-size:.95rem}
+nav a{text-decoration:none;font-weight:600}
+main{max-width:1100px;margin:0 auto;padding:0 20px 64px}
+section{padding-top:48px}
+h2{font-size:1.7rem;margin:0 0 12px}
+.progress{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px}
+.bar{height:14px;background:var(--line);border-radius:99px;overflow:hidden;margin:12px 0 6px}
+.bar>i{display:block;height:100%;background:var(--accent);width:0}
+.stats{display:flex;gap:28px;flex-wrap:wrap;font-family:system-ui,sans-serif}
+.stats b{display:block;font-size:1.8rem;font-family:Georgia,serif}
+.controls{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0;font-family:system-ui,sans-serif}
+input,select{padding:10px 12px;border:1px solid var(--line);border-radius:10px;font-size:1rem;background:#fff}
+input{flex:1;min-width:200px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;position:relative}
+.tile img{width:100%;aspect-ratio:1;object-fit:cover;display:block}
+.tile .badge{position:absolute;top:6px;right:6px;width:30px;height:30px;border-radius:50%;border:2px solid #fff;box-shadow:0 1px 4px #0004}
+.tile div{padding:8px 10px;font-family:system-ui,sans-serif}
+.tile strong{display:block;font-size:.9rem}
+.tile span{font-size:.8rem;color:var(--muted)}
+.tile.cooked{border-color:var(--accent)}
+.count{font-family:system-ui,sans-serif;color:var(--muted);font-size:.9rem}
+.btn{display:inline-block;background:var(--accent);color:#fff;padding:12px 20px;border-radius:10px;text-decoration:none;font-family:system-ui,sans-serif;font-weight:600}
+footer{text-align:center;color:var(--muted);padding:32px 20px;font-family:system-ui,sans-serif;font-size:.9rem}
+</style>
+</head>
+<body>
+<header class="hero">
+  <h1>🐔 Chicken World</h1>
+  <p class="sub">A cookbook in the making: one chicken recipe from every country on Earth.</p>
+  <nav><a href="#progress">Progress</a><a href="#recipes">Dishes</a><a href="#tierlist">Tier list</a><a href="#about">About</a></nav>
+</header>
+<main>
+<section id="progress">
+  <h2>Progress</h2>
+  <div class="progress">
+    <div class="stats">
+      <div><b id="s-cooked">–</b>dishes cooked</div>
+      <div><b id="s-total">–</b>countries</div>
+      <div><b>2032</b>publish target</div>
+    </div>
+    <div class="bar"><i id="bar"></i></div>
+    <div class="count">Cooked dishes get their own photo; the rest show the country's flag until I get to them.</div>
+  </div>
+</section>
+<section id="recipes">
+  <h2>The dishes</h2>
+  <div class="controls">
+    <input id="q" type="search" placeholder="Search country or dish…" aria-label="Search">
+    <select id="region" aria-label="Region"><option value="">All regions</option></select>
+    <select id="status" aria-label="Status"><option value="">All dishes</option><option value="cooked">Cooked so far</option></select>
+  </div>
+  <p class="count" id="n"></p>
+  <div class="grid" id="grid"></div>
+</section>
+<section id="tierlist">
+  <h2>Chicken World Tier List</h2>
+  <p>Rank every dish from S to F with your friends and see the group average.</p>
+  <a class="btn" href="https://claude.ai/artifact/6fz16GLDLFnNta1pnbR6B2">Open the tier list</a>
+</section>
+<section id="about">
+  <h2>About</h2>
+  <p>Chicken World is a long-term project to cook, photograph and write up a chicken recipe from every country, collected into a cookbook. Recipes start as researched drafts and become "tested" once they have been cooked in my kitchen.</p>
+  <p>Follow along on Instagram: <a href="https://www.instagram.com/chickenworldus/">@chickenworldus</a></p>
+</section>
+</main>
+<footer>© Chicken World · chickenworldrecipes.com</footer>
+<script>
+fetch('dishes.json').then(r=>r.json()).then(d=>{
+  const grid=document.getElementById('grid'),q=document.getElementById('q'),reg=document.getElementById('region'),st=document.getElementById('status'),n=document.getElementById('n');
+  [...new Set(d.map(x=>x.region))].forEach(r=>{const o=document.createElement('option');o.value=o.textContent=r;reg.appendChild(o)});
+  const cooked=d.filter(x=>x.photo).length;
+  document.getElementById('s-cooked').textContent=cooked;
+  document.getElementById('s-total').textContent=d.length;
+  document.getElementById('bar').style.width=Math.max(1.5,cooked/d.length*100)+'%';
+  function esc(s){return s.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
+  function render(){
+    const t=q.value.trim().toLowerCase();
+    const list=d.filter(x=>(!reg.value||x.region===reg.value)&&(!st.value||x.photo)&&(!t||(x.country+' '+x.name).toLowerCase().includes(t)));
+    n.textContent=list.length+' of '+d.length+' dishes';
+    grid.innerHTML=list.map(x=>`<div class="tile${x.photo?' cooked':''}"><img loading="lazy" src="${x.img}" alt="${esc(x.name)}">${x.flag?`<img class="badge" src="${x.flag}" alt="">`:''}<div><strong>${esc(x.name)}</strong><span>${esc(x.country)}</span></div></div>`).join('');
+  }
+  [q,reg,st].forEach(e=>e.addEventListener('input',render));render();
+});
+</script>
+</body>
+</html>
