@@ -138,7 +138,7 @@ Promise.all([fetch('dishes.json').then(r=>r.json()),fetch('recipes.json').then(r
     const x=by[id],r=R[id];if(!x||!r)return;
     svg.querySelectorAll('.on').forEach(e=>e.classList.remove('on'));
     svg.querySelectorAll('[data-id="'+id+'"]').forEach(e=>e.classList.add('on'));
-    card.innerHTML=(x.photo?'<span class="tag">Cooked</span>':'')+'<img class="pic" src="'+x.img+'" alt="'+esc(r.t)+'"><h3>'+(x.flag?'<img src="'+x.flag+'" alt="">':'')+esc(r.t)+'</h3><p class="ct">'+esc(x.country)+'</p><p>'+esc(r.s)+'</p><h4>Ingredients</h4><ul>'+r.i.map(i=>i.startsWith('##')?'<li class="sub">'+esc(i.replace(/^#+\s*/,''))+'</li>':'<li>'+esc(i)+'</li>').join('')+'</ul><h4>Directions</h4><ol>'+r.d.map(i=>'<li>'+esc(i)+'</li>').join('')+'</ol>';
+    card.innerHTML=(x.photo?'<span class="tag">Cooked</span>':'')+'<img class="pic" src="'+x.img+'" alt="'+esc(r.t)+'"><h3>'+(x.flag?'<img src="'+x.flag+'" alt="">':'')+esc(r.t)+'</h3><p class="ct">'+esc(x.country)+'</p><p>'+esc(r.s)+'</p><h4>Ingredients</h4><ul>'+r.i.map(i=>i.startsWith('##')?'<li class="sub">'+esc(i.replace(/^#+\s*/,''))+'</li>':'<li>'+esc(i)+'</li>').join('')+'</ul><h4>Directions</h4><ol>'+r.d.map(i=>'<li>'+esc(i)+'</li>').join('')+'</ol>'+(r.n?'<h4>From my kitchen</h4><p>'+esc(r.n)+'</p>':'');
   }
   const fine=matchMedia('(hover:hover)').matches;
   svg.addEventListener('mouseover',e=>{const t=e.target.closest('[data-id]');if(t&&fine&&!pinned)show(t.dataset.id)});
