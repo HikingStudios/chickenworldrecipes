@@ -150,7 +150,7 @@
       <div class="chips" id="chips"></div>
       <div class="tools">
         <input type="search" id="q" placeholder="Search dishes" aria-label="Search dishes">
-        <label><input type="checkbox" id="cooked"> Cooked only</label>
+        <label><input type="checkbox" id="cooked" checked> Cooked only</label>
         <label>Size <input type="range" id="size" min="60" max="140" step="2" value="92" aria-label="Tile size"></label>
       </div>
       <div id="hint" aria-live="polite"></div>
@@ -181,7 +181,7 @@
   var view = "me";                 // "me" | "group" | <uid>
   var lists = new Map();           // uid -> { tiers, updatedAt }
   var names = {};                  // uid -> display name
-  var region = "All", query = "", selected = null, cookedOnly = false;
+  var region = "All", query = "", selected = null, cookedOnly = true;
   var db = null, userCap = null, uid = null, remoteBlocked = false, remoteChecked = false;
   var saveTimer = null, saving = false, again = false;
   var drag = null, pend = null, pendingRender = false, justDragged = false;
