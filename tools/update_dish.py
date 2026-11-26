@@ -21,6 +21,8 @@ if rec.get('personal_note'):
 recipes[d['id']] = r
 d['name'] = rec['title']
 if photo:
+    if not d.get('flag') and not d.get('photo'):
+        d['flag'] = d['img']  # keep the flag as the corner badge
     im = ImageOps.fit(ImageOps.exif_transpose(Image.open(photo)).convert('RGB'), (480, 480))
     b = io.BytesIO(); im.save(b, 'JPEG', quality=82)
     d['img'] = 'data:image/jpeg;base64,' + base64.b64encode(b.getvalue()).decode()
